@@ -10,11 +10,11 @@ def error(msg):
 
 
 def sanitize(field, pattern, leave_double_count=1):
-    doubles = ". @()+"
+    doubles = ". @()+-"
     for double_symbol in doubles:
         field = re.sub(f"[{double_symbol}]+", double_symbol*leave_double_count, field)
     res = dict()
-    res["text"] = field
+    res["text"] = field.strip()
     res["status"] = "ERR"
     if re.fullmatch(pattern, field):
         res["status"] = "OK"
@@ -55,8 +55,9 @@ for line in file_content:
     name = sanitize(name, name_re)
     if name["status"] == "OK":
         name_text = name["text"]
-        name_text = re.split("[[а-яa-z][А-ЯA-Z]| +]", name_text)
-        name_text = " ".join([elem.capitalize() for elem in name_text])
+        #[А-ЯA-Z]| +[а-яa-z]*
+        name_text = re.sub("([А-ЯA-Z][^А-ЯA-Z])", r" \1", name_text).split(" ")
+        name_text = " ".join([elem.strip().capitalize() for elem in name_text if elem])
         name["text"] = name_text
 
     age = sanitize(age, age_re)
