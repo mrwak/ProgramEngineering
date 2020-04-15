@@ -14,8 +14,10 @@ def sanitize(field, pattern, leave_double_count=1):
     for double_symbol in doubles:
         field = re.sub(f"[{double_symbol}]+", double_symbol*leave_double_count, field)
     res = dict()
-    res["text"] = field.strip()
+    field = field.strip()
+    res["text"] = field
     res["status"] = "ERR"
+
     if re.fullmatch(pattern, field):
         res["status"] = "OK"
     else:
@@ -50,19 +52,28 @@ for line in file_content:
     name_re = re.compile(r"([^|\s]+ *[^|]+)")
     age_re = re.compile(r"[0-9]+")
     tel_re = re.compile(r"([\+]?[(]?([0-9]\W*){3}[)]?[-\s\.]?([0-9]\W*){3}[-\s\.]?([0-9]\W*){4,6})")
-    mail_re = re.compile(r"[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+")
+    mail_re = re.compile(r"[^@ \t\r\n]+[^.]@[^@ \t\r\n]+\.[^@ \t\r\n]+")
 
     name = sanitize(name, name_re)
     if name["status"] == "OK":
         name_text = name["text"]
-        #[А-ЯA-Z]| +[а-яa-z]*
         name_text = re.sub("([А-ЯA-Z][^А-ЯA-Z])", r" \1", name_text).split(" ")
         name_text = " ".join([elem.strip().capitalize() for elem in name_text if elem])
         name["text"] = name_text
 
     age = sanitize(age, age_re)
     tel = sanitize(tel, tel_re, 0)
-    mail = sanitize(mail, tel_re)
+    if tel["status"] == "OK":
+        tel_text = list(tel["text"])
+        if tel_text[0] == "8":
+            tel_text[0] = "7"
+        code = "".join(tel_text[1:4])
+        num1 = "".join(tel_text[4:7])
+        num2 = "".join(tel_text[7:])
+        new_tel = f"+{tel_text[0]} ({code}) {num1}-{num2}"
+        tel["text"] = new_tel
+
+    mail = sanitize(mail, mail_re)
 
     print("|".join(elem["text"] for elem in [name, age, tel, mail]))
 
