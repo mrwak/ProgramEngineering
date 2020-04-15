@@ -1,4 +1,4 @@
-# ProgramEngineering
+# ProgramEngineering [![Build Status](https://travis-ci.org/wndenis/ProgramEngineering.svg?branch=master)](https://travis-ci.org/wndenis/ProgramEngineering)
 Labs and practices
 
 В программу подается текст из файла, состоящего из строчек формата  
