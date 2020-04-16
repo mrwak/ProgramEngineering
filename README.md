@@ -1,4 +1,4 @@
-# ProgramEngineering [![Build Status](https://travis-ci.org/wndenis/ProgramEngineering.svg?branch=master)](https://travis-ci.org/wndenis/ProgramEngineering)
+# ProgramEngineering [![Build Status](https://travis-ci.org/wndenis/ProgramEngineering.svg?branch=master)](https://travis-ci.org/wndenis/ProgramEngineering) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=wndenis_ProgramEngineering&metric=alert_status)](https://sonarcloud.io/dashboard?id=wndenis_ProgramEngineering) [![Coverage Status](https://coveralls.io/repos/github/wndenis/ProgramEngineering/badge.svg?branch=master)](https://coveralls.io/github/wndenis/ProgramEngineering?branch=master)
 Labs and practices
 
 В программу подается текст из файла, состоящего из строчек формата  
