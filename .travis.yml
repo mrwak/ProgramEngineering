@@ -20,3 +20,5 @@ script:
 after_success:
   - sonar-scanner
   - coveralls
+ notifications:
+  webhooks: https://discordapp.com/api/webhooks/700463716319363081/7K7Xm8QSFbn9YtDIFfzCCBShbnzLIaZmspfQFGCVpa87YnH-P0I3lZE5Wtr8WGGY7dyj
