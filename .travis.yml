@@ -20,5 +20,11 @@ script:
 after_success:
   - sonar-scanner
   - coveralls
- notifications:
-  webhooks: https://discordapp.com/api/webhooks/700463716319363081/7K7Xm8QSFbn9YtDIFfzCCBShbnzLIaZmspfQFGCVpa87YnH-P0I3lZE5Wtr8WGGY7dyj
+after_success:
+  - wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/master/send.sh
+  - chmod +x send.sh
+  - ./send.sh success $WEBHOOK_URL
+after_failure:
+  - wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/master/send.sh
+  - chmod +x send.sh
+  - ./send.sh failure $WEBHOOK_URL
