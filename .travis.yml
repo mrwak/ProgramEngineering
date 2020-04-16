@@ -16,7 +16,7 @@ addons:
 # 'python' points to Python 2.7 on macOS but points to Python 3.8 on Linux and Windows
 # 'python3' is a 'command not found' error on Windows but 'py' works on Windows only
 script:
-  - python3 main.py || python main.py
+  - coverage run -m main.py
 after_success:
   - sonar-scanner
   - coveralls

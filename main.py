@@ -36,6 +36,9 @@ except Exception as e:
 if not file_content:
     error("File is empty")
 
+assert file_content != ""
+
+
 for line in file_content:
     line = line.strip()
     print()
@@ -46,6 +49,8 @@ for line in file_content:
     if len(line) != 4 or any([len(elem) == 0 for elem in line]):
         print("Invalid line format")
         continue
+
+    assert len(line) == 4
 
     name, age, tel, mail = line
 
@@ -59,10 +64,13 @@ for line in file_content:
         name_text = name["text"]
         name_text = re.sub("([А-ЯA-Z][^А-ЯA-Z])", r" \1", name_text).split(" ")
         name_text = " ".join([elem.strip().capitalize() for elem in name_text if elem])
+        assert len(name_text) > 0
         name["text"] = name_text
 
     age = sanitize(age, age_re)
+    assert len(age["text"]) > 0
     tel = sanitize(tel, tel_re, 0)
+    assert len(tel["text"]) > 0
     if tel["status"] == "OK":
         tel_text = list(tel["text"])
         if tel_text[0] == "8":
@@ -74,6 +82,7 @@ for line in file_content:
         tel["text"] = new_tel
 
     mail = sanitize(mail, mail_re)
+    assert len(mail["text"]) > 0
 
     print("|".join(elem["text"] for elem in [name, age, tel, mail]))
 
